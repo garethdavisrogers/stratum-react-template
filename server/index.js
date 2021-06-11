@@ -13,13 +13,19 @@ app.get("/", (req, res) => {
 });
 
 app.get("/activate", (req, res) => {
-  client.messages
-    .create({
-      body: "Emergency services have been notified",
-      from: "+12562693589",
-      to: "+14785503644",
-    })
-    .then((message) => console.log(message.sid));
+  // client.messages
+  //   .create({
+  //     body: "Gareth is testing SMS capabilities",
+  //     from: "+12562693589",
+  //     to: "+14784612233",
+  //   })
+  //   .then((message) => {
+  //     res.send(message.sid);
+  //   })
+  //   .catch((error) => {
+  //     throw error;
+  //   });
+  res.send("received");
 });
 
 app.listen(port, () => {
