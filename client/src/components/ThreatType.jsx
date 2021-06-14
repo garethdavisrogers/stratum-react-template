@@ -1,6 +1,7 @@
 import React from "react";
 
 const ThreatType = (props) => {
+  const { handleToggleEmergencyType } = props;
   return (
     <div>
       <div>
@@ -8,17 +9,24 @@ const ThreatType = (props) => {
         <input
           name="medical"
           type="checkbox"
-          value={false}
-          onChange={props.handleToggleEmergencyType}
+          onChange={handleToggleEmergencyType}
         />
       </div>
       <div>
         Fire
-        <input type="checkbox" />
+        <input
+          name="fire"
+          type="checkbox"
+          onChange={handleToggleEmergencyType}
+        />
       </div>
       <div>
         Human Threat
-        <input type="checkbox" />
+        <input
+          name="humanThreat"
+          type="checkbox"
+          onChange={handleToggleEmergencyType}
+        />
       </div>
     </div>
   );

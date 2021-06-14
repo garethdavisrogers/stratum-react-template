@@ -23,8 +23,7 @@ class App extends React.Component {
   }
 
   handleToggleEmergencyType(e) {
-    e.preventDefault();
-    console.log(e.target.name);
+    this.setState({ [e.target.name]: !this.state[e.target.name] });
   }
 
   render() {
