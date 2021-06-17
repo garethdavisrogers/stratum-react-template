@@ -29,7 +29,7 @@ class App extends React.Component {
   render() {
     const { active, activateButtonText } = this.state;
     return (
-      <div>
+      <div className="activation-page">
         <button onClick={this.handleActivateFRS}>{activateButtonText}</button>
         {active && (
           <ThreatType
