@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import ThreatType from "./ThreatType.jsx";
+import ThreatType from "./ThreatType";
 
 class App extends React.Component {
   constructor() {

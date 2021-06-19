@@ -1,9 +1,16 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import App from "./App.jsx";
+import App from "./App";
 
-test("renders the correct content", () => {
-  const root = document.createElement("div");
-  ReactDOM.render(<App />, root);
+test("renders the App component with activation button", () => {
+  const { getByText } = render(<App />);
+  expect(getByText("Activate FRS")).not.toBeNull();
+});
+
+test('Activation button changes text "FRS Activated" on click', () => {
+  const { getByText } = render(<App />);
+  userEvent.click(getByText("Activate FRS"));
+  expect(getByText("FRS Activated")).not.toBeNull();
 });
