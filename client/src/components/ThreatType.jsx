@@ -28,6 +28,7 @@ const ThreatType = (props) => {
           onChange={handleToggleEmergencyType}
         />
       </div>
+      <button>Submit Info</button>
     </div>
   );
 };
