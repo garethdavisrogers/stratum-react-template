@@ -8,7 +8,7 @@ class App extends React.Component {
 
     this.state = {
       active: false,
-      activateButtonText: "Activate FRS",
+      activateButtonText: "Click here to Activate FRS",
       medical: false,
       fire: false,
       humanThreat: false,
@@ -26,7 +26,6 @@ class App extends React.Component {
     let incidentStartTime = new Date();
     this.setState({
       active: true,
-      activateButtonText: "FRS Activated",
       incidentStartTime: incidentStartTime.toLocaleTimeString(),
     });
     axios.get("/activate").then((response) => {
@@ -58,14 +57,25 @@ class App extends React.Component {
   }
 
   render() {
-    const { active, activateButtonText } = this.state;
+    const { active } = this.state;
     return (
       <div className="activation-page">
-        <button onClick={this.handleActivateFRS}>{activateButtonText}</button>
+        {!active && (
+          <button
+            className="activation-button"
+            onClick={this.handleActivateFRS}
+          >
+            Click here to activate FRS
+          </button>
+        )}
         {active && (
-          <ThreatType
-            handleToggleEmergencyType={this.handleToggleEmergencyType}
-          />
+          <div>
+            FRS Activated, authorities notified. Please pick the option or
+            options that best describe the situation:
+            <ThreatType
+              handleToggleEmergencyType={this.handleToggleEmergencyType}
+            />
+          </div>
         )}
       </div>
     );
