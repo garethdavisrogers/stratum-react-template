@@ -4,13 +4,25 @@ const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const client = require("twilio")(accountSid, authToken);
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const db = require("../database/index.js");
 
 app.use(express.static("./client/public"));
 
 app.get("/", (req, res) => {
   res.send("hey");
+});
+
+app.get("/users/register", (req, res) => {
+  res.send("register");
+});
+
+app.get("/users/login", (req, res) => {
+  res.send("register");
 });
 
 app.get("/users", (req, res) => {
@@ -38,6 +50,18 @@ app.get("/activate", (req, res) => {
   //   });
   res.send("received");
 });
+
+app.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+app.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
 
 app.listen(port, () => {
   console.log("node is listening");
