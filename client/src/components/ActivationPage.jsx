@@ -51,12 +51,11 @@ class ActivationPage extends React.Component {
       let totalTime = currentTime - incidentTime;
       let formattedTime = this.handleFormatTime(totalTime);
       this.setState({ timeElapsed: formattedTime });
-      console.log(formattedTime);
-    }, 10000);
+    }, 1000);
   }
 
   render() {
-    const { active } = this.state;
+    const { active, timeElapsed } = this.state;
     return (
       <div className="activation-page">
         {!active && (
@@ -69,6 +68,7 @@ class ActivationPage extends React.Component {
         )}
         {active && (
           <div>
+            <div>Time Elapsed: {timeElapsed}</div>
             FRS Activated, authorities notified. Please pick the option or
             options that best describe the situation:
             <ThreatType

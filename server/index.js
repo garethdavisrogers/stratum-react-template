@@ -4,13 +4,13 @@ const dotenv = require("dotenv").config();
 const port = process.env.PORT || 3000;
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const client = require("twilio")(accountSid, authToken);
 const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const db = require("../database/index.js");
+const bycrypt = require("bycrypt");
+const saltRounds = 10;
 
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./client/public"));
 
 app.get("/", (req, res) => {
@@ -22,7 +22,39 @@ app.get("/users/register", (req, res) => {
 });
 
 app.get("/users/login", (req, res) => {
-  res.send("register");
+  //check for username in DB
+  //bcrypt.compare(password, result[0].password), cb)
+});
+
+app.post("/users/register", (req, res) => {
+  let { lastName, firstName, email, password, retypePassword, phoneNumber } =
+    req.body;
+
+  let errors = [];
+
+  if (
+    !lastName ||
+    !firstName ||
+    !email ||
+    !password ||
+    !retypePassword ||
+    !phoneNumber
+  ) {
+    errors.push("Please enter all fields");
+  }
+  if (password.length < 6) {
+    errors.push("Password should be at least 6 characters");
+  }
+  if (password !== retypePassword) {
+    errors.push("Passwords do not match");
+  }
+  const hashed = bycrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) {
+      console.log(err);
+    } else {
+      //log user info with hashed password into PSQL DB
+    }
+  });
 });
 
 app.get("/users", (req, res) => {
