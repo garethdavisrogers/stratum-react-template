@@ -6,10 +6,19 @@ class Login extends React.Component {
 
     this.state = { usernameField: "", passwordField: "" };
 
+    this.handleGetFields = this.handleGetFields.bind(this);
     this.handleSubmitLoginInfo = this.handleSubmitLoginInfo.bind(this);
   }
 
-  handleSubmitLoginInfo() {}
+  handleGetFields(e) {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  handleSubmitLoginInfo() {
+    const { usernameField, passwordField } = this.state;
+    let loginObj = { email: usernameField, password: passwordField };
+    axios.post("http://localhost:3000/auth/login", loginObj);
+  }
 
   render() {
     return (

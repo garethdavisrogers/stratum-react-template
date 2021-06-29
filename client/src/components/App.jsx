@@ -1,27 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+  Route,
+} from "react-router-dom";
+import LoginAndRegistration from "./LoginAndRegistration";
 import ActivationPage from "./ActivationPage";
 
 const App = () => {
   return (
-    <div className="page">
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route>
-            <ActivationPage path="/" />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <Router>
+      <Route exact path="/" component={LoginAndRegistration} />
+      <Route exact path="/activation" component={ActivationPage} />
+    </Router>
   );
 };
+
 export default App;

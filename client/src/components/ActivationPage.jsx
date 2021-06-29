@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import ThreatType from "./ThreatType";
 
 class ActivationPage extends React.Component {
@@ -7,7 +8,6 @@ class ActivationPage extends React.Component {
 
     this.state = {
       active: false,
-      activateButtonText: "Click here to Activate FRS",
       medical: false,
       fire: false,
       humanThreat: false,
@@ -72,6 +72,7 @@ class ActivationPage extends React.Component {
             FRS Activated, authorities notified. Please pick the option or
             options that best describe the situation:
             <ThreatType
+              threatTypes={this.threatTypes}
               handleToggleEmergencyType={this.handleToggleEmergencyType}
             />
           </div>

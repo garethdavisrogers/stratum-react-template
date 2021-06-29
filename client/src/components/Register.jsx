@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class Register extends React.Component {
   constructor() {
@@ -16,14 +17,18 @@ class Register extends React.Component {
 
     this.handleSubmitRegistrationInfo =
       this.handleSubmitRegistrationInfo.bind(this);
+    this.handleGetFields = this.handleGetFields.bind(this);
+
+    axios.defaults.withCredentials = true;
   }
 
+  handleGetFields() {}
   handleSubmitRegistrationInfo() {}
 
   render() {
     return (
       <div>
-        Log In
+        Register with FRS
         <form>
           <div>
             <label>First Name: </label>
@@ -53,7 +58,7 @@ class Register extends React.Component {
             <label>Organization: </label>
             <input type="text" name="organization" />
           </div>
-          <button>Submit</button>
+          <button onClick={this.handleSubmitRegistrationInfo}>Submit</button>
         </form>
       </div>
     );
