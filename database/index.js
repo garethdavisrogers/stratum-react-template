@@ -4,7 +4,7 @@ const pw = process.env.DB_PASSWORD;
 const dbport = process.env.DB_PORT;
 const Pool = require("pg").Pool;
 
-const db = new Pool({
+const pool = new Pool({
   user: "gareth",
   host: "localhost",
   database: database,
@@ -12,4 +12,4 @@ const db = new Pool({
   port: dbport,
 });
 
-module.exports = db;
+module.exports = pool;

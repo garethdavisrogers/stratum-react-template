@@ -1,12 +1,22 @@
 const router = require("express").Router();
-const pool = require("../db");
+const pool = require("../../database/index");
 const bcrypt = require("bcrypt");
+const jwtGenerator = require("../utils/jwtGenerator");
+const validInfo = require("../middleware/validInfo");
+const authorization = require("../middleware/authorization");
 
-router.post("/register", async (req, res) => {
+router.post("/register", validInfo, async (req, res) => {
   try {
-    const { lastName, firstName, email, password, phoneNumber, organization } =
-      req.body;
-    const user = await pool.query("select * from users where email = $1", [
+    const {
+      lastName,
+      firstName,
+      email,
+      password,
+      retypePassword,
+      phoneNumber,
+      organization,
+    } = req.body;
+    const user = await pool.query("select * from users where user_email = $1", [
       email,
     ]);
 
@@ -14,13 +24,17 @@ router.post("/register", async (req, res) => {
       return res.status(401).send("User already exists");
     }
 
+    if (password !== retypePassword) {
+      return res.status(401).send("Passwords do not match");
+    }
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
 
     const bcryptPassword = await bcrypt.hash(password, salt);
     const newUser = await pool.query(
-      "insert into users(last_name, first_name, email, password, phone_number, organization) values ($1, $2, $3, $4, $5, $6) returning *",
-      [lastName, firstName, email, password, phoneNumber, organization]
+      "insert into users(user_last_name, user_first_name, user_email, user_password, user_phone_number, user_organization) values ($1, $2, $3, $4, $5, $6) returning *",
+      [lastName, firstName, email, bcryptPassword, phoneNumber, organization]
     );
     res.json(newUser);
   } catch (err) {
@@ -29,7 +43,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", validInfo, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -50,11 +64,20 @@ router.post("/login", async (req, res) => {
       return res.status(401).json("Password or Username is incorrect");
     }
 
-    return res.status(200).json("logging in");
+    const jwtToken = jwtGenerator(user.rows[0].user_id);
+    return res.json(`Token: ${jwtToken}, verifying`);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
   }
 });
 
+router.get("/verify", authorization, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 module.exports = router;

@@ -2,14 +2,13 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require("twilio")(accountSid, authToken);
+const jwtAuth = require("./routes/jwtAuth");
+const userInfo = require("./routes/userInfo");
 
 app.use(express.json());
 app.use(cors());
-
-app.use("/auth", require("./routes/jwtAuth"));
+app.use("/auth", jwtAuth);
+app.use("/userInfo", userInfo);
 app.use(express.static("./client/public"));
 
 app.get("/activate", (req, res) => {
@@ -31,22 +30,3 @@ app.get("/activate", (req, res) => {
 app.listen(port, () => {
   console.log("node is listening");
 });
-
-// let errors = [];
-
-// if (
-//   !lastName ||
-//   !firstName ||
-//   !email ||
-//   !password ||
-//   !retypePassword ||
-//   !phoneNumber
-// ) {
-//   errors.push("Please enter all fields");
-// }
-// if (password.length < 6) {
-//   errors.push("Password should be at least 6 characters");
-// }
-// if (password !== retypePassword) {
-//   errors.push("Passwords do not match");
-// }

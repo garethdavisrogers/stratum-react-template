@@ -7,10 +7,7 @@ class ActivationPage extends React.Component {
     super();
 
     this.state = {
-      active: false,
-      medical: false,
-      fire: false,
-      humanThreat: false,
+      threatTypes = [];
       threatTypeSubmit: false,
       incidentStartTime: null,
       timeElapsed: "0",
@@ -52,6 +49,10 @@ class ActivationPage extends React.Component {
       let formattedTime = this.handleFormatTime(totalTime);
       this.setState({ timeElapsed: formattedTime });
     }, 1000);
+  }
+
+  componentDidMount(){
+    axios.get('http://localhost:3000/threatTypes').then((data)=>res.send(data))
   }
 
   render() {

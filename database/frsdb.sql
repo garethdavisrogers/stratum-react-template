@@ -1,21 +1,20 @@
 create database if not exists frsdb;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 create table if not exists users(
-  id BIGSERIAL primary key NOT NULL,
-  last_name VARCHAR(40) NOT NULL,
-  first_name VARCHAR(40),
-  password VARCHAR(40),
-  email VARCHAR(40),
-  phone_number VARCHAR(40),
-  organization VARCHAR(40),
-  UNIQUE (email);
+  user_id uuid DEFAULT uuid_generate_v4(),
+  user_last_name VARCHAR(255) NOT NULL,
+  user_first_name VARCHAR(255),
+  user_password VARCHAR(255),
+  user_email VARCHAR(255) unique,
+  user_phone_number VARCHAR(255),
+  user_organization VARCHAR(255)
 );
 create table if not exists admins(
-  id BIGSERIAL primary key NOT NULL,
-  last_name VARCHAR(40) NOT NULL,
-  first_name VARCHAR(40),
-  password VARCHAR(500),
-  email VARCHAR(40),
-  phone_number VARCHAR(40),
-  organization VARCHAR(40),
-  UNIQUE (email);
+  admin_id uuid DEFAULT uuid_generate_v4(),
+  admin_last_name VARCHAR(255) NOT NULL,
+  admin_first_name VARCHAR(255),
+  admin_password VARCHAR(255),
+  admin_email VARCHAR(255) unique,
+  admin_phone_number VARCHAR(255),
+  admin_organization VARCHAR(255)
 );
