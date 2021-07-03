@@ -7,7 +7,7 @@ class ActivationPage extends React.Component {
     super();
 
     this.state = {
-      threatTypes = [];
+      threatTypes: [],
       threatTypeSubmit: false,
       incidentStartTime: null,
       timeElapsed: "0",
@@ -51,8 +51,10 @@ class ActivationPage extends React.Component {
     }, 1000);
   }
 
-  componentDidMount(){
-    axios.get('http://localhost:3000/threatTypes').then((data)=>res.send(data))
+  componentDidMount() {
+    axios
+      .get("http://localhost:3000/threatTypes")
+      .then((data) => res.send(data));
   }
 
   render() {
