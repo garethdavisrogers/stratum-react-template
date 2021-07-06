@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 
 class Register extends React.Component {
   constructor() {
@@ -18,12 +19,33 @@ class Register extends React.Component {
     this.handleSubmitRegistrationInfo =
       this.handleSubmitRegistrationInfo.bind(this);
     this.handleGetFields = this.handleGetFields.bind(this);
-
-    axios.defaults.withCredentials = true;
   }
 
-  handleGetFields() {}
-  handleSubmitRegistrationInfo() {}
+  handleGetFields(e) {
+    e.preventDefault();
+    this.setState({ [e.target.name]: e.target.value });
+  }
+  handleSubmitRegistrationInfo() {
+    const {
+      lastName,
+      firstName,
+      email,
+      password,
+      retypePassword,
+      phoneNumber,
+      organization,
+    } = this.state;
+    let loginObj = {
+      lastName: lastName,
+      firstName: firstName,
+      email: email,
+      password: password,
+      retypePassword: retypePassword,
+      phoneNumber: phoneNumber,
+      organization: organization,
+    };
+    axios.post("http://localhost:3000/auth/register", loginObj);
+  }
 
   render() {
     return (
@@ -60,6 +82,7 @@ class Register extends React.Component {
           </div>
           <button onClick={this.handleSubmitRegistrationInfo}>Submit</button>
         </form>
+        <Link to="/login">Already Registered? Click Here.</Link>
       </div>
     );
   }

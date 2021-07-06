@@ -1,4 +1,5 @@
 const path = require("path");
+const historyApiFallback = require("connect-history-api-fallback");
 
 module.exports = {
   mode: "development",
@@ -24,6 +25,7 @@ module.exports = {
       { test: /\.(mp3|wav|mpe?g|ogg)?$/i, use: [{ loader: "file-loader" }] },
     ],
   },
+  devServer: { historyApiFallback: true },
   resolve: {
     extensions: [".jsx", ".js"],
   },

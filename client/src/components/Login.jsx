@@ -1,8 +1,10 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = { usernameField: "", passwordField: "" };
 
@@ -14,7 +16,8 @@ class Login extends React.Component {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   }
-  handleSubmitLoginInfo() {
+  handleSubmitLoginInfo(e) {
+    e.preventDefault();
     const { usernameField, passwordField } = this.state;
     let loginObj = { email: usernameField, password: passwordField };
     axios.post("http://localhost:3000/auth/login", loginObj);
@@ -33,8 +36,9 @@ class Login extends React.Component {
             <label>Password: </label>
             <input type="text" name="passwordField" />
           </div>
-          <button>Submit</button>
+          <button onClick={this.handleSubmitLoginInfo}>Submit</button>
         </form>
+        <Link to="/register">Not Registered? Click Here.</Link>
       </div>
     );
   }

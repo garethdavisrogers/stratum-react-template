@@ -4,14 +4,11 @@ const path = require("path");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 const jwtAuth = require("./routes/jwtAuth");
-const userInfo = require("./routes/userInfo");
 
 app.use(express.json());
 app.use(cors());
 app.use("/auth", jwtAuth);
-app.use("/userInfo", userInfo);
 app.use(express.static("./client/public"));
-
 app.get("/activate", (req, res) => {
   // client.messages
   //   .create({
@@ -26,6 +23,10 @@ app.get("/activate", (req, res) => {
   //     throw error;
   //   });
   res.send("received");
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/public/index.html"));
 });
 
 app.listen(port, () => {

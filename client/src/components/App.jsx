@@ -12,6 +12,9 @@ import ActivationPage from "./ActivationPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const setAuth = (bool) => {
+    setIsAuthenticated(bool);
+  };
   return (
     <Router>
       <div>
