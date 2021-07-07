@@ -50,7 +50,7 @@ class Login extends React.Component {
           <div>
             <label>Password: </label>
             <input
-              type="text"
+              type="password"
               name="passwordField"
               onChange={this.handleGetFields}
             />

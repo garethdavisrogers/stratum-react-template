@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "test": "jest --env=jsdom",
+    "test": "jest --env=jsdom --reporters default jest-stare",
     "build": "webpack -w",
     "start": "nodemon server/index.js"
   },
@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "file-loader": "^6.2.0",
+    "jest-stare": "^2.2.2",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "pg": "^8.6.0",

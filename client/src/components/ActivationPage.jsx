@@ -3,19 +3,21 @@ import axios from "axios";
 import ThreatType from "./ThreatType";
 
 class ActivationPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       threatTypes: [],
       threatTypeSubmit: false,
       incidentStartTime: null,
       timeElapsed: "0",
+      userLocation: null,
     };
     this.handleActivateFRS = this.handleActivateFRS.bind(this);
     this.handleToggleEmergencyType = this.handleToggleEmergencyType.bind(this);
     this.handleFormatTime = this.handleFormatTime.bind(this);
     this.handleGetTime = this.handleGetTime.bind(this);
+    this.handleGetUserLocation = this.handleGetUserLocation.bind(this);
   }
 
   handleActivateFRS() {
@@ -51,11 +53,19 @@ class ActivationPage extends React.Component {
     }, 1000);
   }
 
+  handleGetUserLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      this.setState({ userLocation: position.coords });
+    });
+  }
+
   componentDidMount() {
     axios
       .get("http://localhost:3000/threatTypes")
       .then((response) => {
         response.data;
+        this.handleGetUserLocation();
       })
       .catch((err) => {
         throw err;

@@ -10,7 +10,7 @@ import Register from "./Register";
 import ActivationPage from "./ActivationPage";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const setAuth = (bool) => {
     setIsAuthenticated(bool);
   };

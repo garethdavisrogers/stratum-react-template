@@ -1,12 +1,29 @@
 import React from "react";
+import TextDescription from "./TextDescription";
+import SoundRecorder from "./SoundRecorder";
+import VideoRecorder from "./VideoRecorder";
 
-const ThreatType = ({ threatTypes }) => {
-  const { handleToggleEmergencyType } = props;
-  return (
-    <div>
-      <button>Submit Info</button>
-    </div>
-  );
-};
+class ThreatType extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      textDescription: "",
+      soundRecording: null,
+      VideoRecording: null,
+    };
+  }
+
+  render() {
+    const { handleToggleEmergencyType } = this.props;
+    return (
+      <div>
+        <TextDescription />
+        <SoundRecorder />
+        <VideoRecorder />
+        <button>Submit Info</button>
+      </div>
+    );
+  }
+}
 
 export default ThreatType;
