@@ -36,7 +36,8 @@ router.post("/register", validInfo, async (req, res) => {
       "insert into users(user_last_name, user_first_name, user_email, user_password, user_phone_number, user_organization) values ($1, $2, $3, $4, $5, $6) returning *",
       [lastName, firstName, email, bcryptPassword, phoneNumber, organization]
     );
-    res.json(newUser);
+    const userInfo = await JSON.stringify(newUser.rows[0]);
+    return res.status(200).send(userInfo);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -65,7 +66,8 @@ router.post("/login", validInfo, async (req, res) => {
     }
 
     const jwtToken = jwtGenerator(user.rows[0].user_id);
-    return res.json(`Token: ${jwtToken}, verifying`);
+    const userInfo = user.rows[0];
+    return res.json({ token: jwtToken, userInfo: userInfo });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -77,7 +79,7 @@ router.get("/verify", authorization, async (req, res) => {
     res.json(true);
   } catch (err) {
     console.log(err.message);
-    res.status(500).send("Server Error");
+    return res.status(500).send("Server Error");
   }
 });
 module.exports = router;

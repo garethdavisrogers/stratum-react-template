@@ -54,7 +54,12 @@ class ActivationPage extends React.Component {
   componentDidMount() {
     axios
       .get("http://localhost:3000/threatTypes")
-      .then((data) => res.send(data));
+      .then((response) => {
+        response.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   render() {

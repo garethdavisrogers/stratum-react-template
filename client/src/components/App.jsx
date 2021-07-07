@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -35,7 +34,7 @@ const App = () => {
             path="/login"
             render={(props) =>
               !isAuthenticated ? (
-                <Login {...props} />
+                <Login {...props} setAuth={setAuth} />
               ) : (
                 <Redirect to="/activation" />
               )
@@ -46,7 +45,7 @@ const App = () => {
             path="/register"
             render={(props) =>
               !isAuthenticated ? (
-                <Register {...props} />
+                <Register {...props} setAuth={setAuth} />
               ) : (
                 <Redirect to="/activation" />
               )

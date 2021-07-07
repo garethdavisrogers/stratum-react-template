@@ -7,7 +7,6 @@ const validInfo = (req, res, next) => {
   }
 
   if (req.path === "/register") {
-    console.log(!email.length);
     if (
       ![email, lastName, firstName, password, phoneNumber, organization].every(
         Boolean

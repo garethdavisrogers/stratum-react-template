@@ -20,7 +20,18 @@ class Login extends React.Component {
     e.preventDefault();
     const { usernameField, passwordField } = this.state;
     let loginObj = { email: usernameField, password: passwordField };
-    axios.post("http://localhost:3000/auth/login", loginObj);
+    axios
+      .post("http://localhost:3000/auth/login", loginObj)
+      .then((response) => {
+        const token = response.data.token;
+        console.log(response.data.userInfo);
+        JSON.stringify(token);
+        localStorage.setItem("token", token);
+        this.props.setAuth(true);
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   render() {
@@ -30,11 +41,19 @@ class Login extends React.Component {
         <form>
           <div>
             <label>Username: </label>
-            <input type="text" name="usernameField" />
+            <input
+              type="text"
+              name="usernameField"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Password: </label>
-            <input type="text" name="passwordField" />
+            <input
+              type="text"
+              name="passwordField"
+              onChange={this.handleGetFields}
+            />
           </div>
           <button onClick={this.handleSubmitLoginInfo}>Submit</button>
         </form>

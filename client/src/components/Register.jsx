@@ -3,8 +3,8 @@ import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
 class Register extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       lastName: "",
@@ -14,6 +14,7 @@ class Register extends React.Component {
       email: "",
       phoneNumber: "",
       organization: "",
+      redirected: false,
     };
 
     this.handleSubmitRegistrationInfo =
@@ -25,7 +26,8 @@ class Register extends React.Component {
     e.preventDefault();
     this.setState({ [e.target.name]: e.target.value });
   }
-  handleSubmitRegistrationInfo() {
+  handleSubmitRegistrationInfo(e) {
+    e.preventDefault();
     const {
       lastName,
       firstName,
@@ -35,7 +37,7 @@ class Register extends React.Component {
       phoneNumber,
       organization,
     } = this.state;
-    let loginObj = {
+    const loginObj = {
       lastName: lastName,
       firstName: firstName,
       email: email,
@@ -44,7 +46,15 @@ class Register extends React.Component {
       phoneNumber: phoneNumber,
       organization: organization,
     };
-    axios.post("http://localhost:3000/auth/register", loginObj);
+    axios
+      .post("http://localhost:3000/auth/register", loginObj)
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ redirected: true });
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   render() {
@@ -54,35 +64,60 @@ class Register extends React.Component {
         <form>
           <div>
             <label>First Name: </label>
-            <input type="text" name="firstName" />
+            <input
+              type="text"
+              name="firstName"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Last Name: </label>
-            <input type="text" name="lastName" />
+            <input
+              type="text"
+              name="lastName"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Password: </label>
-            <input type="text" name="password" />
+            <input
+              type="text"
+              name="password"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Retype Password: </label>
-            <input type="text" name="retypePassword" />
+            <input
+              type="text"
+              name="retypePassword"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Email: </label>
-            <input type="text" name="email" />
+            <input type="text" name="email" onChange={this.handleGetFields} />
           </div>
           <div>
             <label>Phone Number: </label>
-            <input type="text" name="phoneNumber" />
+            <input
+              type="text"
+              name="phoneNumber"
+              onChange={this.handleGetFields}
+            />
           </div>
           <div>
             <label>Organization: </label>
-            <input type="text" name="organization" />
+            <input
+              type="text"
+              name="organization"
+              onChange={this.handleGetFields}
+            />
           </div>
           <button onClick={this.handleSubmitRegistrationInfo}>Submit</button>
         </form>
         <Link to="/login">Already Registered? Click Here.</Link>
+        {this.state.redirected && <Redirect to="/login" />}
       </div>
     );
   }
