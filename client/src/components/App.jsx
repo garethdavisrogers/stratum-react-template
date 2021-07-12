@@ -7,10 +7,9 @@ import {
 } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import ActivationPage from "./ActivationPage";
-
+import Main from './Main';
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const setAuth = (bool) => {
     setIsAuthenticated(bool);
   };
@@ -25,7 +24,7 @@ const App = () => {
               !isAuthenticated ? (
                 <Redirect to="/login" />
               ) : (
-                <Redirect to="/activation" />
+                <Redirect to="/main" />
               )
             }
           />
@@ -36,7 +35,7 @@ const App = () => {
               !isAuthenticated ? (
                 <Login {...props} setAuth={setAuth} />
               ) : (
-                <Redirect to="/activation" />
+                <Redirect to="/main" />
               )
             }
           />
@@ -47,16 +46,16 @@ const App = () => {
               !isAuthenticated ? (
                 <Register {...props} setAuth={setAuth} />
               ) : (
-                <Redirect to="/activation" />
+                <Redirect to="/main" />
               )
             }
           />
           <Route
             exact
-            path="/activation"
+            path="/main"
             render={(props) =>
               isAuthenticated ? (
-                <ActivationPage {...props} />
+                <Main {...props} />
               ) : (
                 <Redirect to="/login" />
               )

@@ -2,7 +2,7 @@ const router = require("express").Router();
 const pool = require("../../database/index");
 const authorization = require("../middleware/authorization");
 
-router.get("/activation", authorization, async (req, res) => {
+router.get("/main", authorization, async (req, res) => {
   try {
     console.log(req.user);
     const user = await pool.query(
